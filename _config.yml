@@ -1,7 +1,7 @@
 # Site settings
 title: 枫のBlog
 SEOTitle: 笔落生花 - 风吹笔落书年华
-header-img: img/post-bg-desk.jpg
+header-img: img/frame/post-bg-desk.jpg
 email: lyj.code@gmail.com
 description: "一笔一划，描叙写实诉情记事，难在持之以恒--与君共勉"
 keyword: "技术博客, C++, Java, Flutter, Python, C"
@@ -12,7 +12,7 @@ github_repo: "https://github.com/git45016683/git45016683.github.io.git" # you co
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "目标, 累积成长的基石!"
-sidebar-avatar: /img/about-someone.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/frame/about-someone.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
