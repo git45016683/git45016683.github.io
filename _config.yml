@@ -99,7 +99,7 @@ service-worker: true
 # 友情链接，请尽量不要删除，谢谢！
 friends: [
     {
-        title: "感谢klovien",
+        title: "感谢博主: klovien",
         href: "https://klovien.github.io"
     },{
         title: "紫冰枫的C++Blog",
