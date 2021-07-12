@@ -23,9 +23,9 @@ tags:
 ![default_disable](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-1-macro-disable-1.png)  
 ![enable](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-1-macro-enable-2.png)  
 
-2、任务通知可以只发送通知，不附带任何值，这种用法，像不像信号量类型的用法？所以任务通知的接口也提供了类似信号量接口的形式，方便使用和区分
-xTaskNotifyGive：释放任务通知   【xSemaphoreGive-释放信号量】
-ulTaskNotifyTake：获取任务通知 【xSemaphoreTake-获取信号量】
+2、任务通知可以只发送通知，不附带任何值，这种用法，像不像信号量类型的用法？所以任务通知的接口也提供了类似信号量接口的形式，方便使用和区分  
+xTaskNotifyGive：释放任务通知   【xSemaphoreGive-释放信号量】  
+ulTaskNotifyTake：获取任务通知 【xSemaphoreTake-获取信号量】  
 2.1、使用示例：task1每隔8S释放一个任务通知给task2，task2则每隔1S尝试去获取任务通知，获取超时时间为10S
 ![2release_notify_1](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-2-release-notify-1.png)  
 ![2take_notify_2](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-2-take-notify-2.png)  
@@ -33,11 +33,11 @@ ulTaskNotifyTake：获取任务通知 【xSemaphoreTake-获取信号量】
 2.2、烧写验证
 ![2run_3](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-2-run-3.png)  
 
-3、既然任务通知可以不附带任何值，那么其也可以有附带值的用法：
-xTaskNotify：释放任务通知，附带更新的任务通知值，并且可以设定任务通知值的更新方式
-xTaskNotifyWait：获取任务通知
-3.1、使用示例：task3每隔6S释放一个任务通知给task4，通知值为1，并且以通知值累加的方式进行，task4每隔1S尝试获取任务通知，获取超时时间为8S；
-由于并没有清除通知值，且使用了通知值累加的方式，那么可以预期到，获取到的通知值会一直累加
+3、既然任务通知可以不附带任何值，那么其也可以有附带值的用法：  
+xTaskNotify：释放任务通知，附带更新的任务通知值，并且可以设定任务通知值的更新方式  
+xTaskNotifyWait：获取任务通知  
+3.1、使用示例：task3每隔6S释放一个任务通知给task4，通知值为1，并且以通知值累加的方式进行，task4每隔1S尝试获取任务通知，获取超时时间为8S；  
+由于并没有清除通知值，且使用了通知值累加的方式，那么可以预期到，获取到的通知值会一直累加  
 ![3release_notify_1](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-3-release-notify-1.png)  
 ![3take_notify_2](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-3-take-notify-2.png)  
 printf("/r/nNotifyTask4: %d, ret %ld, notifyValue=%d", task2TestCount++, ret, comeIMG);  
