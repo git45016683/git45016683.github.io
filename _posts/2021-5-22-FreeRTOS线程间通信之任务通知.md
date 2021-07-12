@@ -11,12 +11,12 @@ tags:
 ---
 # FreeRTOS 线程间通信之任务通知
 #### 任务通知
-> 每个RTOS任务都有一个32位的通知值，任务创建时，这个值被初始化为0。RTOS任务通知相当于直接向任务发送一个事件，接收到通知的任务可以解除阻塞状态，前提是这个阻塞事件是因等待通知而引起的。发送通知的同时，也可以可选的改变接收任务的通知值。
-   可以通过下列方法向接收任务更新通知：
-	○ 不覆盖接收任务的通知值
-	○ 覆盖接收任务的通知值
-	○ 设置接收任务通知值的某些位
-	○ 增加接收任务的通知值
+> 每个RTOS任务都有一个32位的通知值，任务创建时，这个值被初始化为0。RTOS任务通知相当于直接向任务发送一个事件，接收到通知的任务可以解除阻塞状态，前提是这个阻塞事件是因等待通知而引起的。发送通知的同时，也可以可选的改变接收任务的通知值。  
+   可以通过下列方法向接收任务更新通知：  
+	○ 不覆盖接收任务的通知值  
+	○ 覆盖接收任务的通知值  
+	○ 设置接收任务通知值的某些位  
+	○ 增加接收任务的通知值  
 
 
 1、查看任务控制块的通知定义，其定义在taskTCB任务控制块中，受控于宏configUSE_TASK_NOTIFICATIONS，该宏默认开启，所以任务通知功能默认开启
@@ -40,13 +40,13 @@ xTaskNotifyWait：获取任务通知
 由于并没有清除通知值，且使用了通知值累加的方式，那么可以预期到，获取到的通知值会一直累加
 ![3release_notify_1](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-3-release-notify-1.png)  
 ![3take_notify_2](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-3-take-notify-2.png)  
-printf("/r/nNotifyTask4: %d, ret %ld, notifyValue=%d", task2TestCount++, ret, comeIMG);
+printf("/r/nNotifyTask4: %d, ret %ld, notifyValue=%d", task2TestCount++, ret, comeIMG);  
 3.2、烧写验证
 ![3run_3](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-3-run-3.png)  
 
-4、任务通知还提供一个接口，释放通知的时候，可以获取到前一个未被获取的通知值。可以根据这个参数以及函数的返回值，判断前一个通知值是什么以及是否被更新
-xTaskNotifyAndQuery：如果通知值更新方式被设置为eSetValueWithoutOverwrite，不能被覆写，如果前一次释放的任务通知值未被获取，就再次触发了任务通知的释放，那么其会返回pdFALSE，通知值更新失败。此时可以根据最后一个参数，查询前一个通知值是什么
-4.1、使用示例，task5每隔2S释放一次任务通知，通知值以非覆写的方式进行，通知值为5、6来回变化；task6每隔5S获取一次任务通知，获取超时时间同样为5S，那么预期的结果会是task5在成功释放一次任务通知后，会出现一次释放任务通知失败，第一次失败的通知值应该为6
+4、任务通知还提供一个接口，释放通知的时候，可以获取到前一个未被获取的通知值。可以根据这个参数以及函数的返回值，判断前一个通知值是什么以及是否被更新  
+xTaskNotifyAndQuery：如果通知值更新方式被设置为eSetValueWithoutOverwrite，不能被覆写，如果前一次释放的任务通知值未被获取，就再次触发了任务通知的释放，那么其会返回pdFALSE，通知值更新失败。此时可以根据最后一个参数，查询前一个通知值是什么  
+4.1、使用示例，task5每隔2S释放一次任务通知，通知值以非覆写的方式进行，通知值为5、6来回变化；task6每隔5S获取一次任务通知，获取超时时间同样为5S，那么预期的结果会是task5在成功释放一次任务通知后，会出现一次释放任务通知失败，第一次失败的通知值应该为6  
 ![4release_notify_1](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-4-release-notify-1.png)  
 ![4take_notify_2](/img/frame/freertos/chapter4-thread-communication/notify/FRTOS-4-notify-4-take-notify-2.png)  
 
