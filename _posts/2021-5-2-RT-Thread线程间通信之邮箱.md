@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      RT-Thread添线程间通信之邮箱
+title:      RT-Thread线程间通信之邮箱
 subtitle:   万事开头难, 更难在坚持[新坑体验]
 date:       2021-05-02
 author:     (icemaple)
