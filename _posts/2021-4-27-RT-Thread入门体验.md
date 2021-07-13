@@ -10,7 +10,7 @@ tags:
     - 技术什锦
 ---
 # RT-Thread Nano 入门体验
-##### 本入门体验示例，主要基于STM32CubeMX生成的工程，再手动移植RT-Thread源码的方式实现。关于如何使用STM32CubeMX创建对应工程，网上有很多教程，亦可参考blog内的教程《[STM32CubeMX创建MDK工程](2021-4-27-STM32CubeMX创建MDK工程.md)》
+##### 本入门体验示例，主要基于STM32CubeMX生成的工程，再手动移植RT-Thread源码的方式实现。关于如何使用STM32CubeMX创建对应工程，网上有很多教程，亦可参考blog内的教程《[STM32CubeMX创建MDK工程]({{site.baseurl}}/2021/04/27/STM32CubeMX创建MDK工程)》
 1、新建存放rtt文件的文件夹，这里命名为rtos
 ![folder](/img/frame/rt-thread/chapter1-try-to-experience/RTT-1-1-folder.png)
 2、将从rtt网站指导下下载下来的rtt-nano源码拷贝必要的文件夹到上一步新建的rtos文件夹
