@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-12 01:28:30
+ * @LastEditTime: 2021-07-14 01:14:29
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \git45016683.github.io\_posts\2021-4-30-RT-Thread线程间同步之信号量.md
+-->
 ---
 layout:     post
 title:      RT-Thread线程间同步之信号量
@@ -27,7 +35,6 @@ tags:
 
 5、捕捉信号量
 ![take_semaphore](/img/frame/rt-thread/chapter3-thread-sync/semaphore/RTT-3-sema-4-release-semaphore.png)  
-![add_header_path](/img/frame/rt-thread/chapter2-finsh-component/RTT-2-5-add-finsh-head-path-2.png)  
 
 6、编译通过，烧写成功
 ![flash](/img/frame/rt-thread/chapter3-thread-sync/semaphore/RTT-3-sema-6-build-pass.png)  
