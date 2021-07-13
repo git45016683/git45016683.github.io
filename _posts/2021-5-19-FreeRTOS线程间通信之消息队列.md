@@ -21,19 +21,19 @@ tags:
 3、添加头文件
 ![include_head](/img/frame/freertos/chapter4-thread-communication/messageque/FRTOS-4-messageque-3-include-head.png)  
 
-4、发送函数
-xQueueSend：// 写入到队末，队列满后，超时不会插入
-xQueueSendToBack：// 写入到队末，队列满后，超时不会插入
+4、发送函数  
+xQueueSend：// 写入到队末，队列满后，超时不会插入  
+xQueueSendToBack：// 写入到队末，队列满后，超时不会插入  
 
 上面两个宏定义内函数调用其实是一样的：
 ![send](/img/frame/freertos/chapter4-thread-communication/messageque/FRTOS-4-messageque-4-send-1.png)  
 ![sendtoback](/img/frame/freertos/chapter4-thread-communication/messageque/FRTOS-4-messageque-4-sendtoback-2.png)  
-xQueueOverwrite：// 写入到队末，队列满后，超时不会插入
-xQueueSendToFront：// 写入到队末，队列满后，超时不会插入
+xQueueOverwrite：// 写入到队末，队列满后，超时不会插入  
+xQueueSendToFront：// 写入到队末，队列满后，超时不会插入  
 
 
-5、5、接收函数
-xQueueReceive：//取出消息，并从队列中删除该消息
+5、5、接收函数  
+xQueueReceive：//取出消息，并从队列中删除该消息  
 xQueuePeek：//取出消息，不删除队列中的该消息  
 
 6、xQueueSend发送时，队列满了，会如何？使用xQueueSend发送100ms一次

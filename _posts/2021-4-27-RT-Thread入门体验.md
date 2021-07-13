@@ -10,16 +10,16 @@ tags:
     - 技术什锦
 ---
 # RT-Thread Nano 入门体验
-##### 本入门体验示例，主要基于STM32CubeMX生成的工程，再手动移植RT-Thread源码的方式实现。关于如何使用STM32CubeMX创建对应工程，网上有很多教程，亦可参考blog内的教程《STM32CubeMX创建MDK工程》
+##### 本入门体验示例，主要基于STM32CubeMX生成的工程，再手动移植RT-Thread源码的方式实现。关于如何使用STM32CubeMX创建对应工程，网上有很多教程，亦可参考blog内的教程《[STM32CubeMX创建MDK工程](2021-4-27-STM32CubeMX创建MDK工程.md)》
 1、新建存放rtt文件的文件夹，这里命名为rtos
 ![folder](/img/frame/rt-thread/chapter1-try-to-experience/RTT-1-1-folder.png)
 2、将从rtt网站指导下下载下来的rtt-nano源码拷贝必要的文件夹到上一步新建的rtos文件夹
 ![copyfiles](/img/frame/rt-thread/chapter1-try-to-experience/RTT-1-2-copy-rtt-files.png)
-bsp：板级支持包（当前示例stm32例子中只使用到board.c及rtconfig.h，其他可以删掉）
-components：组件文件夹
-include：头文件目录
-libcpu：处理器相关的启动文件（stm32f103属于cortex-m3系列，只要保留cortex-m3文件夹即可，其他都可以删除）
-src：内核源码
+bsp：板级支持包（当前示例stm32例子中只使用到board.c及rtconfig.h，其他可以删掉）  
+components：组件文件夹  
+include：头文件目录  
+libcpu：处理器相关的启动文件（stm32f103属于cortex-m3系列，只要保留cortex-m3文件夹即可，其他都可以删除）  
+src：内核源码  
 3、添加上述五个文件夹的所有内容到新建的rtos，并将其添加到git管控
 ![addtogit](/img/frame/rt-thread/chapter1-try-to-experience/RTT-1-3-add-to-git.png)
 4、将上述描述到没有用到的芯片平台相关文件件和板级支持包删除，精简工程

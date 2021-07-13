@@ -16,15 +16,15 @@ tags:
 
 2、将从freertos的github上下载下来的文件，拷贝source到rtos路径下
 ![copy_files](/img/frame/freertos/chapter1-try-to-experience/FRTOS-1-2-copy-freertos-files.png)  
->include: 头文件目录
-portable: 硬件接口相关文件夹(芯片接口相关/内存管理相关等)
-	- Keil: ARM-MDK IDE的启动文件(硬件接口)相关-->里面就一个文件说明跟RVDS一样，所以后面移植会直接移植RVDS的内容
-	- MemMang: 内存管理相关
-	- RVDS: 
-	- GCC: GCC编译环境的启动文件相关
-	- ….
+>include: 头文件目录  
+portable: 硬件接口相关文件夹(芯片接口相关/内存管理相关等)  
+	- Keil: ARM-MDK IDE的启动文件(硬件接口)相关-->里面就一个文件说明跟RVDS一样，所以后面移植会直接移植RVDS的内容  
+	- MemMang: 内存管理相关  
+	- RVDS:   
+	- GCC: GCC编译环境的启动文件相关  
+	- ….  
 
-*.c：freertos的列表队列任务等实现源文件
+*.c：freertos的列表队列任务等实现源文件  
 
 3、将上述Source文件夹拷贝到rtos文件夹内，并将其添加到git版本管理
 ![add_to_git](/img/frame/freertos/chapter1-try-to-experience/FRTOS-1-3-add-to-git.png)  
@@ -55,9 +55,9 @@ portable: 硬件接口相关文件夹(芯片接口相关/内存管理相关等)
 ![change_ithadler_1](/img/frame/freertos/chapter1-try-to-experience/FRTOS-1-10-change-ithandler-1.png)  
 2）将xPortPendSVHandler/vPortSVCHandler重定义为PendSV_Handler/SVC_Handler  
  - 如果使用2方式，并且使用CubeMx生成的工程，那么需要在stm32f10x_it.c文件内将PendSV_Handler/SVC_Handler两个中断函数注释掉，不然会报多重定义的错误  
-这里示例使用第2种方式：
+这里示例使用第2种方式：  
 ![change_ithadler_2](/img/frame/freertos/chapter1-try-to-experience/FRTOS-1-10-change-ithandler-2.png)  
-主要是函数声明类型跟INIT_xxx_EXPORT要求的不一样，将函数返回值由void修改为int即可，当然函数内亦需要按实际情况return一个值。
+主要是函数声明类型跟INIT_xxx_EXPORT要求的不一样，将函数返回值由void修改为int即可，当然函数内亦需要按实际情况return一个值。  
 
 11、将FreeRTOS的时钟中断服务函数xPortSysTickHandler添加到SysTick_Handler函数中，参考[链接](https://bbs.21ic.com/icview-2897082-1-1.html)
 ![config_systick_1](/img/frame/freertos/chapter1-try-to-experience/FRTOS-1-11-config-systickhandler-1.png)  

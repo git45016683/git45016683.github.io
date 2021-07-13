@@ -30,13 +30,13 @@ tags:
 6、那么应该会有两次获取不到信号量，超时返回pdFALSH，烧写验证
 ![run](/img/frame/freertos/chapter4-thread-communication/semaphore/FRTOS-4-semaphore-6-run.png)  
 
-7、中断版本也是这两个函数，后缀多了FromISR
+7、中断版本也是这两个函数，后缀多了FromISR  
 xSemaphoreGiveFromISR(semaphHandle, &pxHigherPriorityTaskWoken);  
-xSemaphoreTakeFromISR(semaphHandle, &pxHigherPriorityTaskWoken); 
-// 第二个参数是表明接收线程是否需要优先执行(线程优先级反转)
+xSemaphoreTakeFromISR(semaphHandle, &pxHigherPriorityTaskWoken);  
+// 第二个参数是表明接收线程是否需要优先执行(线程优先级反转)  
 
 如果在二值信号量正在处理中，又有中断触发了二值信号量，然后又有一次中断触发，那么可能会导致这俩次中断触发的信号量被丢失，不能正确进入处理，因为二值信号量只能keep住空非空的状态
-模拟试试：
+模拟试试：  
 ![sendmore](/img/frame/freertos/chapter4-thread-communication/semaphore/FRTOS-4-semaphore-7-sendmore-1.png)  
 接收信号量的地方跟上面一样，不变，烧写验证下：
 ![recv_same_run_again](/img/frame/freertos/chapter4-thread-communication/semaphore/FRTOS-4-semaphore-7-recv-same-run-2.png)  
@@ -56,9 +56,9 @@ xSemaphoreTakeFromISR(semaphHandle, &pxHigherPriorityTaskWoken);
 11、那么理论上获取应该可以将所有的信号量都成功获取并处理，编译烧写验证之
 编译出错，未定义的函数
 ![build_error](/img/frame/freertos/chapter4-thread-communication/semaphore/FRTOS-4-semaphore-11-build-error-1.png)  
-configSUPPORT_DYNAMIC_ALLOCATION宏默认开启，那么就是configUSE_COUNTING_SEMAPHORES这个宏需要开启一下
+configSUPPORT_DYNAMIC_ALLOCATION宏默认开启，那么就是configUSE_COUNTING_SEMAPHORES这个宏需要开启一下  
 ![macro_disable](/img/frame/freertos/chapter4-thread-communication/semaphore/FRTOS-4-semaphore-11-macro-disable-2.png)  
-在FreeRTOSConfig.h头文件中启用之
+在FreeRTOSConfig.h头文件中启用之  
 ![macro_enable](/img/frame/freertos/chapter4-thread-communication/semaphore/FRTOS-4-semaphore-11-macro-enable-3.png)  
 
 12、编译通过，烧写验证：连续的信号量被成功获取

@@ -12,11 +12,11 @@ tags:
 # FreeRTOS 线程间同步之临界区
 #### 临界区是提供互斥功能的一种原始方式，可以简单粗暴的实现线程之间的互斥，确保线程间数据同步是稳定可信的
 > 临界区有两种，一种是关闭中断及系统任务的  
-taskENTER_CRITICAL();
+taskENTER_CRITICAL();  
 taskEXIT_CRITICAL();  
 另一种是关闭系统任务调度(禁止系统任务调度，直到重新开启任务调度)的  
-vTaskSuspendScheduler();  / vTaskSuspendAll();
-vTaskResumeScheduler(); / vTaskResumeAll();
+vTaskSuspendScheduler();  / vTaskSuspendAll();  
+vTaskResumeScheduler(); / vTaskResumeAll();  
 
 
 1、未使用临界区的示例，例如我们理想先在任务1输出10次信息，再到任务2输出10次信息，最后到任务3输出10次信息，如此循环

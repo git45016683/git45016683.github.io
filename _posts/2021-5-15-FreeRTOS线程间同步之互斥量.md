@@ -23,8 +23,8 @@ tags:
 
 3、运行结果
 ![run](/img/frame/freertos/chapter3-thread-sync/mutex/FRTOS-3-mutex-3-mutex-demo-run.png)  
-可以看到后面都是任务2的信息在输出，这是因为任务2的优先级最高，它释放了互斥量后，马上又获取到，其他两个任务饿死了……
-修改：增加一个切换时间片或者阻塞的状态到释放完互斥量后面
+可以看到后面都是任务2的信息在输出，这是因为任务2的优先级最高，它释放了互斥量后，马上又获取到，其他两个任务饿死了……  
+修改：增加一个切换时间片或者阻塞的状态到释放完互斥量后面  
 ![demo_thead_change1](/img/frame/freertos/chapter3-thread-sync/mutex/FRTOS-3-mutex-3-mutex-demo-change-1.png)  
 ![demo_thead_change2](/img/frame/freertos/chapter3-thread-sync/mutex/FRTOS-3-mutex-3-mutex-demo-change-2.png)  
 

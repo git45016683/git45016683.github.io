@@ -19,23 +19,14 @@ tags:
 
 2、打开UARTCommandConsole文件，查看其依赖关系，发现有FreeRTOS_CLI.h/serial.h两个头文件挺陌生
 ![check_head_depandend](/img/frame/freertos/chapter2-command-line/FRTOS-2-2-found-other-files.png)  
->include: 头文件目录
-portable: 硬件接口相关文件夹(芯片接口相关/内存管理相关等)
-	- Keil: ARM-MDK IDE的启动文件(硬件接口)相关-->里面就一个文件说明跟RVDS一样，所以后面移植会直接移植RVDS的内容
-	- MemMang: 内存管理相关
-	- RVDS: 
-	- GCC: GCC编译环境的启动文件相关
-	- ….
 
-*.c：freertos的列表队列任务等实现源文件
-
-3、找到serial相关文件(.c/.h)并拷贝到工程目录下[serial.h在FreeRTOS/Demo/Common/include下；serial.c可根据实际板子及编译器情况，可以在对应(或相近)的demo路径下找到，例如这里使用stm32f10x系列，serial.c可以在FreeRTOS/Demo/CORTEX_STM32F103_Keil/serial下找到]
+3、找到serial相关文件(.c/.h)并拷贝到工程目录下【 serial.h在FreeRTOS/Demo/Common/include下；serial.c可根据实际板子及编译器情况，可以在对应(或相近)的demo路径下找到，例如这里使用stm32f10x系列，serial.c可以在FreeRTOS/Demo/CORTEX_STM32F103_Keil/serial下找到 】
 ![copy_files_to_mdk_1](/img/frame/freertos/chapter2-command-line/FRTOS-2-3-copy-clifile-from-demo-1.png)  
 ![copy_files_to_mdk_2](/img/frame/freertos/chapter2-command-line/FRTOS-2-3-copy-clifile-from-demo-2.png)  
 ![copy_files_to_mdk_3](/img/frame/freertos/chapter2-command-line/FRTOS-2-3-copy-clifile-from-demo-3.png)  
 ![copy_files_to_mdk_4](/img/frame/freertos/chapter2-command-line/FRTOS-2-3-copy-clifile-from-demo-4.png)  
 
-4、找到FreeRTOS_CLI相关文件(.c/.h)并拷贝到工程目录下[FreeRTOS/FreeRTOS-Plus/Source/FreeRTOS-Plus-CLI]
+4、找到FreeRTOS_CLI相关文件(.c/.h)并拷贝到工程目录下【 FreeRTOS/FreeRTOS-Plus/Source/FreeRTOS-Plus-CLI 】
 ![copy_cli_files](/img/frame/freertos/chapter2-command-line/FRTOS-2-4-copy-clifile-from-demo-2.png)  
 
 5、Sample-CLI-command.c的头文件依赖如下，上面添加的依赖已经足够
@@ -51,29 +42,29 @@ portable: 硬件接口相关文件夹(芯片接口相关/内存管理相关等)
 8、在FreeRTOS_CLI.h头文件中添加宏定义configCOMMAND_INT_MAX_OUTPUT_SIZE【也可以统一在FreeRTOSConfig.h头文件中定义】
 ![config_macro](/img/frame/freertos/chapter2-command-line/FRTOS-2-8-config-macro-in-cli.png)  
 
-9、serial.c内串口相关的函数和宏定义都是库函数版本，改造成HAL库版本，并提供两个版本（中断接收及空闲中断+DMA接收）
-  9.1) 添加头文件及串口声明
+9、serial.c内串口相关的函数和宏定义都是库函数版本，改造成HAL库版本，并提供两个版本（中断接收及空闲中断+DMA接收）  
+  9.1) 添加头文件及串口声明  
 ![add_headfile_and_uart_define](/img/frame/freertos/chapter2-command-line/FRTOS-2-9-1.png)  
 
-9.2) xSerialPortInitMinimal修改：删掉函数开始的结构体定义，把if( ( xRxedChars != serINVALID_QUEUE ) && ( xCharsForTx != serINVALID_QUEUE ) ){}内的内容修改为
+9.2) xSerialPortInitMinimal修改：删掉函数开始的结构体定义，把if( ( xRxedChars != serINVALID_QUEUE ) && ( xCharsForTx != serINVALID_QUEUE ) ){}内的内容修改为  
 ```cpp
 HAL_UART_Receive_DMA(&huart2, (uint8_t*)uart2_recv_buff, sizeof(uart2_recv_buff));  // 使用DMA
-```
-或者
+```  
+或者  
 ```cpp
 HAL_UART_Receive_IT(&huart1, &aRxBuffer, 1);  // 不使用DMA，使用中断接收
 ![it_recv_without_dma](/img/frame/freertos/chapter2-command-line/FRTOS-2-9-2.png)  
-```
-9.3) xSerialPutChar修改：把USART_ITConfig( USART1, USART_IT_TXE, ENABLE );删掉，在同样的位置增加如下代码：
+```  
+9.3) xSerialPutChar修改：把USART_ITConfig( USART1, USART_IT_TXE, ENABLE );删掉，在同样的位置增加如下代码：  
 ```cpp
 uint8_t cChar;
 if (xQueueReceive(xCharsForTx, &cChar, 0) == pdTRUE)
 {
 	while(HAL_UART_Transmit_IT(&huart2, &cChar, 1) != HAL_OK);
 }
-```
+```  
 ![change_xserialputchar](/img/frame/freertos/chapter2-command-line/FRTOS-2-9-3.png)  
-主要是函数声明类型跟INIT_xxx_EXPORT要求的不一样，将函数返回值由void修改为int即可，当然函数内亦需要按实际情况return一个值。
+主要是函数声明类型跟INIT_xxx_EXPORT要求的不一样，将函数返回值由void修改为int即可，当然函数内亦需要按实际情况return一个值。  
 
 9.4) 删掉(注释掉)中断服务函数vUARTInterruptHandler，将空闲中断接收一整帧数据的函数添加进来
 ```cpp
@@ -97,7 +88,7 @@ void UART2_IDLECallback(UART_HandleTypeDef* huart)
 	HAL_UART_Receive_DMA(&huart2, (uint8_t*)uart2_recv_buff, sizeof(uart2_recv_buff));  // 重启开始DMA传输 每次255字节数据
 	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
-```
+```  
 ![it_recv_with_dma](/img/frame/freertos/chapter2-command-line/FRTOS-2-9-4.png)  
 
 10、编译，已经没有报serial相关的错误，而是报了两个未定义错误
